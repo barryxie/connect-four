@@ -81,7 +81,7 @@ function placeInTable(y, x) {
 /** endGame: announce game end */
 
 function endGame(msg) {
-  alert(msg)
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -101,12 +101,24 @@ function handleClick(evt) {
   placeInTable(y, x);
 
   // check for win
+  const removeTop = document.querySelector('#column-top');
   if (checkForWin()) {
-    return endGame(`Player ${currPlayer} won!`);
+    setTimeout(() => {
+      endGame(`Player ${currPlayer} won!`);
+    }, 1000);
+    removeTop.removeEventListener('click', handleClick)
+    
+    
   }
 
   // check for tie
- if(board.every(row => row.every(cell => cell)));
+ if(board.every(row => row.every(cell => cell))){
+  endGame('tie');
+  removeTop.removeEventListener('click', handleClick)
+    
+  
+  
+ };
   // switch players
   currPlayer = currPlayer===1? 2: 1;
 }
