@@ -101,23 +101,27 @@ function handleClick(evt) {
   placeInTable(y, x);
 
   // check for win
-  const removeTop = document.querySelector('#column-top');
+  function removeClick(){
+    const removeTop = document.querySelector('#column-top');
+    removeTop.removeEventListener('click', handleClick)
+  }
+  
   if (checkForWin()) {
     setTimeout(() => {
       endGame(`Player ${currPlayer} won!`);
     }, 1000);
-    removeTop.removeEventListener('click', handleClick)
+    removeClick();
     
     
   }
 
   // check for tie
  if(board.every(row => row.every(cell => cell))){
-  endGame('tie');
-  removeTop.removeEventListener('click', handleClick)
-    
-  
-  
+  removeTop.removeEventListener('click', handleClick);
+  setTimeout(() => {
+    endGame('tie');;
+  }, 1000);
+  removeClick();
  };
   // switch players
   currPlayer = currPlayer===1? 2: 1;
